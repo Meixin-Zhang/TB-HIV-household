@@ -1,16 +1,18 @@
-Kenya_data_spreadsheet <- read.csv("~/OneDrive - UW/TB-HIV copy/1_8/Kenya_data_spreadsheet.csv")
+Kenya_data_spreadsheet <- read.csv("~/OneDrive - UW/TB-HIV copy/1_8/hhcdata.csv")
 lpos <- read.csv("~/OneDrive - UW/TB-HIV copy/1_8/lpos.csv")
 Ipos_Susanne <- read.csv("~/OneDrive - UW/TB-HIV copy/1_8/Ipos_Susanne.csv")
 library(tidyverse)
 
 # calculate the number of HIV infected adults in TB affected households (column N * column HIV_pre)
-for(i in 1:nrow(Kenya_data_spreadsheet)){
-  Kenya_data_spreadsheet$HIV_positive[i] <- 
-  Kenya_data_spreadsheet$N[i] * Kenya_data_spreadsheet$HIV_pre[i]
+for(i in 1:nrow(hhcdata)){
+  hhcdata$HIV_positive[i] <- 
+  hhcdata$N[i] * hhcdata$HIV_pre[i]
 }
 
 # calculate the HIV prevalence in adults in TB affected households
-HIVpre<-sum(Kenya_data_spreadsheet$N)/sum(Kenya_data_spreadsheet$HIV_positive)
+for (country in c("Kenya","Uganda","Ethiopia","SouthAfrica")) {
+  assign(paste0("HIVpre",country), with(subset(hhcdata, Country==country), sum(HIV_positive)/sum(N)))
+}
 
 # The linear relationship between lpos and HIV prevalence
 lm_lpos<-lm(lpos$lpos~lpos$HIV_population_prevalence...)
