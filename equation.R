@@ -14,6 +14,11 @@ for (country in c("Kenya","Uganda","Ethiopia","SouthAfrica")) {
   assign(paste0("HIVpre",country), with(subset(hhcdata, Country==country), sum(HIV_positive)/sum(N)))
 }
 
+# calculate the N of HIV+ in TB affected households by countries
+for (country in c("Kenya","Uganda","Ethiopia","SouthAfrica")) {
+  assign(paste0("NHIV",country), with(subset(hhcdata, Country==country), sum(HIV_positive)))
+}
+
 # The linear relationship between lpos and HIV prevalence
 lm_lpos<-lm(lpos$lpos~lpos$HIV_population_prevalence...)
 summary(lm_lpos) # lpos=43.7406-1.3450*HIVpre
@@ -23,3 +28,17 @@ summary(lm_ipos) # Ipos=46.5813 - 1.4836*HIVpre
 abline(lm_ipos)
 
 # incorporate HIVpre into the linear model
+HIVpredata<-data.frame(predict(lm_ipos,newdata = data.frame(
+  HIV_population_prevalence...=c(HIVpreKenya, HIVpreUganda, HIVpreEthiopia, HIVpreSouthAfrica)),
+  interval="confidence"))
+HIVpredata$country<-c("Kenya","Uganda","Ethiopia","SouthAfrica")
+HIVpredata<-HIVpredata[,c("country","fit","lwr","upr")]
+HIVpredata$NHIV<-c(NHIVKenya, NHIVUganda, NHIVEthiopia, NHIVSouthAfrica)
+for (i in 1:nrow(HIVpredata)) {
+  HIVpredata$NSDC[i]<-
+    HIVpredata$fit[i]*HIVpredata$NHIV[i]/100
+  HIVpredata$NSDC_lw[i]<-
+    HIVpredata$lwr[i]*HIVpredata$NHIV[i]/100
+  HIVpredata$NSDC_up[i]<-
+    HIVpredata$upr[i]*HIVpredata$NHIV[i]/100
+}
