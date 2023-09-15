@@ -1,0 +1,2 @@
+x_cov,beta_soln,beta_var,beta_gprior_mean,beta_gprior_var,beta_uprior_lb,beta_uprior_ub,z_cov,gamma_soln,gamma_gprior_mean,gamma_gprior_var,gamma_uprior_lb,gamma_uprior_ub
+intercept,-0.2839889796884574,0.23170824665321574,0.0,inf,-inf,inf,intercept,0.6425026633504124,0.0,inf,0.0,inf

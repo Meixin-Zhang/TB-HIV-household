@@ -1,0 +1,3 @@
+"covariate","design_matrix","gprior_mean","gprior_var","uprior_lb","uprior_ub","bspline_gprior_mean","bspline_gprior_var","bspline_uprior_lb","bspline_uprior_ub","bspline_mono","bspline_cvcv","l_zero","bspline_mono_start","bspline_mono_end","bspline_cvcv_start","bspline_cvcv_end","degree","n_i_knots","i_knots","knot_placement_procedure","r_linear","l_linear","type"
+"intercept","Z",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"base"
+"intercept","X",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"base"

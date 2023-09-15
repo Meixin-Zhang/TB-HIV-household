@@ -1,0 +1,35 @@
+Country,Year,Data,n_total,n_hiv,n_ipos,HIVpre,ipos
+Burkina Faso,2003,,,,,1.54,0.744318182
+Cameroon,2004,,,,,5.35,0.518935517
+Ethiopia,2005,,,,,1.43,0.755458515
+Ghana,2003,,,,,2.04,0.63960396
+Guinea,2005,,,,,1.57,0.6875
+CÔte d’Ivoire,2005,,,,,4.71,0.69482976
+Kenya ,2008,https://www.dhsprogram.com/pubs/pdf/FR229/FR229.pdf,6707,423,213.3716815,6.3,0.504424779
+Kenya ,2003,,,,,6.7,0.5
+Malawi,2004,,,,,11.74,0.407872697
+Niger,2006,,,,,0.68,0.734375
+Rwanda,2005,,,,,3,0.390990991
+Senegal,2005,,,,,0.54,0.473684211
+Tanzania ,2003,,,,,7.03,0.603065134
+Zimbabwe,2005,,,,,18.14,0.306064209
+Uganda,2011,https://dhsprogram.com/pubs/pdf/AIS10/AIS10.pdf,19556,1427.588,713.794,7.3,0.5
+Ethiopia,2016,https://dhsprogram.com/pubs/pdf/FR328/FR328.HIV.pdf,24679,222.111,126.60327,0.9,0.57
+South Africa,2016,https://dhsprogram.com/pubs/pdf/FR337/FR337.pdf,4685,993,347.218338,21.2,0.349666
+South Africa,2017,,,,,14,0.43629
+Lesotho,2014,https://dhsprogram.com/pubs/pdf/FR309/FR309.pdf,5821,1431.966,393.8479286,24.6,0.27504
+Lesotho,2009,https://dhsprogram.com/pubs/pdf/FR241/FR241.pdf,6634,1526,465.654322,23,0.305147
+Lesotho,2004,,,,,23.1,0.257978723
+Burkina Faso,2010,https://dhsprogram.com/pubs/pdf/FR256/FR256.pdf,14607,146,109.5,1,0.75
+Cameroon,2018,https://dhsprogram.com/pubs/pdf/SR266/SR266.pdf,12948,350,235.7142858,2.7,0.673469388
+Cameroon,2011,https://dhsprogram.com/pubs/pdf/FR260/FR260.pdf,13503,581,385.1573032,4.3,0.662921348
+Ghana,2014,https://dhsprogram.com/pubs/pdf/FR307/FR307.pdf,8326,117,71.34146347,2,0.609756098
+Guinea,2018,https://dhsprogram.com/pubs/pdf/FR353/FR353.pdf,8567,128.505,112.441875,1.5,0.875
+Guinea,2012,https://dhsprogram.com/pubs/pdf/FR280/FR280.pdf,7949,135.133,79.69382055,1.7,0.58974359
+CÔte d’Ivoire,2011,https://dhsprogram.com/pubs/pdf/FR272/FR272.pdf,8560,316.72,185.9008696,3.7,0.586956522
+Malawi,2015,https://dhsprogram.com/pubs/pdf/FR319/FR319.pdf,14455,1272.04,545.1600005,8.8,0.428571429
+Malawi,2010,https://dhsprogram.com/pubs/pdf/FR247/FR247.pdf,13588,1440.328,580.2269196,10.6,0.402843602
+Senegal,2017,https://dhsprogram.com/pubs/pdf/FR345/FR345.pdf,13701,68.505,45.67000002,0.5,0.666666667
+Mali ,2012,https://dhsprogram.com/pubs/pdf/FR286/FR286.pdf,8310,91.41,91.41,1.1,1
+Tanzania,2011,https://dhsprogram.com/pubs/pdf/AIS11/AIS11.pdf,17745,904.995,442.8698935,5.1,0.489361702
+Zimbabwe,2015,https://dhsprogram.com/pubs/pdf/FR322/FR322.pdf,16142,2227.596,640.6158424,13.8,0.287581699

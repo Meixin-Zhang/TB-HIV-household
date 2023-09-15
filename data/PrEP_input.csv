@@ -1,0 +1,4 @@
+measurement,sample_size,case,mean,upper,lower
+HIV transmission with PrEP,1682.3,4,0.002377697,0.004705026,5.04E-05
+PrEP uptake,1010,982,0.972277228,0.982402362,0.962152094
+HIV transmission without PrEP,1700.2,80.7,0.047465004,0.057572075,0.037357933
