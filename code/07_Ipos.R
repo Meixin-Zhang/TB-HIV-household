@@ -27,7 +27,7 @@ library(msm)
 library(dplyr)
 
 ## HELPER OBJECTS
-main_dir <- paste0(j, "temp/TB/mzhang25/TB_HHC/data/")
+main_dir <- paste0(h, "TB-HIV-household/data/")
 
 #############################################################################################
 ###                                         IPOS clean                                    ###
@@ -144,12 +144,14 @@ ipos_ci$hiv_prev <- round(ipos_ci$hiv_prev, 1)
 #############################################################################################
 ###                               IPOS + hiv prev in tb affected hh                       ###
 #############################################################################################
-hiv_hhc <- read.dta13(paste0(main_dir, "HIV_prev_TB_HH_draws.dta"))
+hiv_hhc <- read.dta13(paste0(main_dir, "/prevalence_scenario/HIV_prev_TB_HH_draws.dta"))
 # clean HIV prevalence data
 hiv_hhc <- hiv_hhc[hiv_hhc$age_group_id==0,]
 hiv_hhc <- hiv_hhc%>%select(-contains(c("hiv_prev")))
-hiv_hhc_copy <- hiv_hhc[, -c(1, 3, 4)]
+hiv_hhc_copy <- as.data.table(hiv_hhc)
+hiv_hhc_copy[, age_group_id:= NULL][, sex_id := NULL][, measurement := NULL]
 hiv_hhc_copy <- hiv_hhc_copy[, -c(2:2001)]
+hiv_hhc_copy <- as.data.frame(hiv_hhc_copy)
 for (i in seq(2,1001,1)){
   hiv_hhc_copy[, i] <- 2*round(hiv_hhc_copy[, i]*1000/2)/10
 }
@@ -173,7 +175,7 @@ hiv_hhc.long <- hiv_hhc.long[, .(location_id, draw, ipos)]
 hiv_hhc.wide <- reshape(hiv_hhc.long, idvar = "location_id", timevar = "draw", direction = "wide")
 names(hiv_hhc.wide) <- gsub("\\.", "", names(hiv_hhc.wide))
 hiv_hhc <- cbind(hiv_hhc, hiv_hhc.wide)
-write.csv(hiv_hhc, paste0(main_dir, "sero_dis_cp_draws.csv"), row.names = F)
+write.csv(hiv_hhc, paste0(main_dir, "/prevalence_scenario/sero_dis_cp_draws.csv"), row.names = F)
 
 # hiv_hhc.long <- hiv_hhc.long <- melt(hiv_hhc.wide, id.vars = "location_id")
 # hiv_hhc.long <- hiv_hhc.long%>%group_by(location_id) %>%
@@ -184,11 +186,14 @@ write.csv(hiv_hhc, paste0(main_dir, "sero_dis_cp_draws.csv"), row.names = F)
 #############################################################################################
 ###                        IPOS + hiv prev in tb affected hh (incidence scenario)         ###
 #############################################################################################
-hiv_hhc_inc <- read.dta13(paste0(main_dir, "HIV_prev_TB_HH_draws_incident.dta"))
+hiv_hhc_inc <- as.data.table(read.dta13(paste0(main_dir, "/incidence_scenario/HIV_prev_TB_HH_draws_incident.dta")))
 # clean HIV prevalence data
 hiv_hhc_inc <- hiv_hhc_inc[hiv_hhc_inc$age_group_id==0,]
-hiv_hhc_inc_copy <- hiv_hhc_inc[, -c(1, 3:5)]
-hiv_hhc_inc_copy <- hiv_hhc_inc_copy[, -c(2:2002)]
+hiv_hhc_inc_copy <- hiv_hhc_inc
+hiv_hhc_inc_copy[, age_group_id:= NULL][, sex_id := NULL][, measurement := NULL][, v1 := NULL][, population := NULL]
+hiv_hhc_inc_copy <- hiv_hhc_inc_copy[, -paste0("hiv_", 0:999)]
+hiv_hhc_inc_copy <- hiv_hhc_inc_copy[, -paste0("pop_", 0:999)]
+hiv_hhc_inc_copy <- as.data.frame(hiv_hhc_inc_copy)
 for (i in seq(2,1001,1)){
   hiv_hhc_inc_copy[, i] <- 2*round(hiv_hhc_inc_copy[, i]*1000/2)/10
 }
@@ -212,4 +217,5 @@ hiv_hhc_inc.long <- hiv_hhc_inc.long[, .(location_id, draw, ipos)]
 hiv_hhc_inc.wide <- reshape(hiv_hhc_inc.long, idvar = "location_id", timevar = "draw", direction = "wide")
 names(hiv_hhc_inc.wide) <- gsub("\\.", "", names(hiv_hhc_inc.wide))
 hiv_hhc_inc <- cbind(hiv_hhc_inc, hiv_hhc_inc.wide)
-write.csv(hiv_hhc_inc, paste0(main_dir, "sero_dis_cp_draws_inc.csv"), row.names = F)
+hiv_hhc_inc[, sex_id := 3][, age_group_id := 0]
+write.csv(hiv_hhc_inc, paste0(main_dir, "/incidence_scenario/sero_dis_cp_draws_inc.csv"), row.names = F)

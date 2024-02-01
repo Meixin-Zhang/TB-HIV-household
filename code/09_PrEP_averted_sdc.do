@@ -11,7 +11,7 @@
 	
 	// Define focal drives
 	if c(os) == "Unix" {
-		global prefix "/home/j"
+		global prefix "/homes/"
 		local function_prefix "/ihme/cc_resources"
 		set odbcmgr unixodbc
 	}
@@ -23,7 +23,7 @@
 ** STEP 1: Generate 1000 draws of PrEP input
 **********************************************************************************************************************
 // Pull data with 95% CI
-import delimited "$prefix/temp/TB/mzhang25/TB_HHC/data/PrEP_input.csv", clear
+import delimited "$prefix/mzhang25/TB-HIV-household/data/PrEP_input.csv", clear
 
 // 1000 draws:
 	gen sd = (upper-lower)/(2*1.96)
@@ -43,7 +43,7 @@ save `prep', replace
 ** STEP 2a: No intervention: number of HIV negative individuals in SDC infected by HIV in 1 year (incidence scenario)
 **********************************************************************************************************************
 // Pull number of SDC 
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/n_and_p_SCD_draw_inc.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/n_and_p_SCD_draw_inc.dta", clear
 keep location_id nsdc_* 	
 gen measurement = "HIV transmission without PrEP"
 tempfile nsdc
@@ -65,7 +65,7 @@ save `hiv_transmission', replace
 **********************************************************************************************************************
 ** STEP 2b: with intervention: number of HIV negative individuals in SDC infected by HIV in 1 year (incidence scenario)
 **********************************************************************************************************************
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/n_and_p_SCD_draw_inc.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/n_and_p_SCD_draw_inc.dta", clear
 keep location_id nsdc_* 	
 gen measurement = "HIV transmission with PrEP"
 tempfile nsdc
@@ -129,13 +129,13 @@ egen upper_averted_transmission=rowpctile(averted_transmission_*), p(97.5)
 egen lower_averted_transmission=rowpctile(averted_transmission_*), p(2.5)
 
 drop HIV_transmission_* HIV_transmission_prep_* averted_transmission_*
-save "$prefix/temp/TB/mzhang25/TB_HHC/data/PrEP_summary_inc.dta", replace
+save "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/PrEP_summary_inc.dta", replace
 
 **********************************************************************************************************************
 ** STEP 3a: No intervention: number of HIV negative individuals in SDC infected by HIV in 1 year (prevalence scenario)
 **********************************************************************************************************************
 // Pull number of SDC 
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/n_and_p_SCD_draw.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/prevalence_scenario/n_and_p_SCD_draw.dta", clear
 keep location_id nsdc_* 	
 gen measurement = "HIV transmission without PrEP"
 tempfile nsdc
@@ -154,9 +154,9 @@ tempfile hiv_transmission
 save `hiv_transmission', replace
 
 **********************************************************************************************************************
-** STEP 3b: with intervention: number of HIV negative individuals in SDC infected by HIV in 1 year (incidence scenario)
+** STEP 3b: with intervention: number of HIV negative individuals in SDC infected by HIV in 1 year (prevalence scenario)
 **********************************************************************************************************************
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/n_and_p_SCD_draw_inc.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/prevalence_scenario/n_and_p_SCD_draw.dta", clear
 keep location_id nsdc_* 	
 gen measurement = "HIV transmission with PrEP"
 tempfile nsdc
@@ -220,4 +220,4 @@ egen upper_averted_transmission=rowpctile(averted_transmission_*), p(97.5)
 egen lower_averted_transmission=rowpctile(averted_transmission_*), p(2.5)
 
 drop HIV_transmission_* HIV_transmission_prep_* averted_transmission_*
-save "$prefix/temp/TB/mzhang25/TB_HHC/data/PrEP_summary_prev.dta", replace
+save "$prefix/mzhang25/TB-HIV-household/data/prevalence_scenario/PrEP_summary_prev.dta", replace

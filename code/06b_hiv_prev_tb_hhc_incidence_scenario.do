@@ -11,7 +11,7 @@
 	
 	// Define focal drives
 	if c(os) == "Unix" {
-		global prefix "/home/j"
+		global prefix "/homes/"
 		local function_prefix "/ihme/cc_resources"
 		set odbcmgr unixodbc
 	}
@@ -24,7 +24,7 @@
 ** STEP 1: HIV prevalence in HHC
 **********************************************************************************************************************
 // import HHC HIV relative risk
-import delimited "$prefix/temp/TB/mzhang25/TB_HHC/data/lit_review/rr_draws.csv", clear
+import delimited "$prefix/mzhang25/TB-HIV-household/data/lit_review/rr_draws.csv", clear
 drop ratio lower upper sd
 forvalues i=0/999 {
 			replace draw_`i' = 0 if draw_`i' < 0
@@ -33,7 +33,7 @@ tempfile hhc_hiv_rr
 save `hhc_hiv_rr', replace
 
 // merge on national HIV prev
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/hiv_prev_national_draws.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/hiv_prev_national_draws.dta", clear
 preserve 
 	drop if location_id == 179
 	forvalues i = 0/999 {
@@ -57,7 +57,7 @@ save `hiv_prev_hhc', replace
 **********************************************************************************************************************
 ** STEP 2: Number of HIV+ in HHC
 **********************************************************************************************************************
-import delimited "$prefix/temp/TB/mzhang25/TB_HHC/data/20211109_count_draw_of_NDPTB_hhc_incident.csv", clear
+import delimited "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/20211109_count_draw_of_NDPTB_hhc_incident.csv", clear
 drop year
 reshape wide count_value, i(location age sex) j(draw)
 forvalues i = 0/999 {
@@ -116,7 +116,7 @@ save `hiv_hhc', replace
 ** STEP 3: Number and prevalence of HIV+ in TB affected HH
 **********************************************************************************************************************
 // numerator: all HIV+ cases
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/HIV_TB_inc_draws.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/HIV_TB_inc_draws.dta", clear
 forvalues i = 0/999 {
 		rename draw_`i' hiv_tb_`i'
 	}
@@ -140,10 +140,10 @@ forvalues i = 0/999 {
 	replace measurement = "# HIV+ in TB affected HH"
 	tempfile all_hiv
 	save `all_hiv', replace
-	save "$prefix/temp/TB/mzhang25/TB_HHC/data/HIV_count_TB_HH_draws_incidence_scenario.dta", replace
+	save "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/HIV_count_TB_HH_draws_incidence_scenario.dta", replace
 	
 // denominator: TB cases + HHC
-use "$prefix/temp/TB/mzhang25/TB_HHC/data/all_TB_inc_draws.dta", clear
+use "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/all_TB_inc_draws.dta", clear
 	// Generate 15-49 age group
 	preserve
 	collapse (sum) draw_*, by (location_id) fast
@@ -170,7 +170,7 @@ forvalues i = 0/999 {
 		gen draw_`i' = hiv_`i' / pop_`i'
 	}
 	replace measurement = "% HIV in TB HH"
-	save "$prefix/temp/TB/mzhang25/TB_HHC/data/HIV_prev_TB_HH_draws_incident.dta", replace
+	save "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/HIV_prev_TB_HH_draws_incident.dta", replace
 	
 	egen mean=rowmean(draw_*) 
 	egen upper=rowpctile(draw_*), p(97.5) 
@@ -184,4 +184,4 @@ forvalues i = 0/999 {
 
 	keep age_group_id location_id sex_id measurement mean upper lower mean_* upper_* lower_*
 	
-	save "$prefix/temp/TB/mzhang25/TB_HHC/data/HIV_prev_TB_HH_summary_incident.dta", replace
+	save "$prefix/mzhang25/TB-HIV-household/data/incidence_scenario/HIV_prev_TB_HH_summary_incident.dta", replace
